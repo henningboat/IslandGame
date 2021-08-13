@@ -30,6 +30,10 @@ namespace IslandGame.TerrainSystem
 
         private void Update()
         {
+            if (Application.isPlaying && Time.frameCount > 2)
+            {
+                return;
+            }
             if (_mesh == null)
             {
                 _mesh = new Mesh {name = "ProceduralTerrain"};
@@ -65,31 +69,35 @@ namespace IslandGame.TerrainSystem
             {
                 for (int z = 0; z < TerrainSize.y; z++)
                 {
-                    int vertexIndex = (x * TerrainSize.x) + z * 4;
+                    int vertexIndex = (x * TerrainSize.x + z) * 4;
 
-                    vertexData[vertexIndex + 0] = new VertexData() {position = SampleHeightmap(heightmap, x + 0, z + 0)};
-                    vertexData[vertexIndex + 1] = new VertexData() {position = SampleHeightmap(heightmap, x + 1, z + 0)};
-                    vertexData[vertexIndex + 2] = new VertexData() {position = SampleHeightmap(heightmap, x + 0, z + 1)};
-                    vertexData[vertexIndex + 3] = new VertexData() {position = SampleHeightmap(heightmap, x + 1, z + 1)};
+                    vertexData[vertexIndex + 0] = new VertexData() {position = new float3(x,SampleHeightmap(heightmap, x + 0, z + 0),z)};
+                    vertexData[vertexIndex + 1] = new VertexData() {position = new float3(x+1,SampleHeightmap(heightmap, x + 1, z + 0),z)};
+                    vertexData[vertexIndex + 2] = new VertexData() {position = new float3(x,SampleHeightmap(heightmap, x + 0, z + 1),z+1)};
+                    vertexData[vertexIndex + 3] = new VertexData() {position = new float3(x+1,SampleHeightmap(heightmap, x + 1, z + 1),z+1)};
 
-                    int indexIndex = x * (TerrainSize.x + z) * 6;
+                    int indexIndex = (x * TerrainSize.x + z) * 6;
 
-                    indexData[indexIndex + 0] =(uint) vertexIndex;
+                    indexData[indexIndex + 0] =(uint) vertexIndex + 2;
                     indexData[indexIndex + 1] =(uint) vertexIndex + 1;
-                    indexData[indexIndex + 2] =(uint) vertexIndex + 2;
-                    indexData[indexIndex + 3] =(uint) vertexIndex;
-                    indexData[indexIndex + 4] =(uint) vertexIndex + 3;
-                    indexData[indexIndex + 5] =(uint) vertexIndex + 2;
+                    indexData[indexIndex + 2] =(uint) vertexIndex + 0;
+                    indexData[indexIndex + 3] =(uint) vertexIndex + 1;
+                    indexData[indexIndex + 4] =(uint) vertexIndex + 2;
+                    indexData[indexIndex + 5] =(uint) vertexIndex + 3;
                 }
             }
             
+            data.subMeshCount = 1;
             data.SetSubMesh(0,new SubMeshDescriptor(0,indexCount));
 
             Mesh.ApplyAndDisposeWritableMeshData(meshWriter, _mesh);
+            _mesh.RecalculateNormals();
+            _mesh.RecalculateBounds();
             
             heightmap.Dispose();
 
             GetComponent<MeshFilter>().sharedMesh = _mesh;
+            GetComponent<MeshCollider>().sharedMesh = _mesh;
         }
 
         private float SampleHeightmap(NativeArray<float> heightmap, int x, int z)
