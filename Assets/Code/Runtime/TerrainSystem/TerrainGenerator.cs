@@ -112,24 +112,6 @@ namespace IslandGame.TerrainSystem
             heightmap[x * TerrainSize.x + z] = height;
         }
 
-        private void OnDrawGizmos()
-        {
-            var sdfShapes = FindObjectsOfType<SDFShape>();
-            
-            if(sdfShapes.Length==0)
-                return;
-            
-            for (int x = 0; x < 50; x++)
-            {
-                for (int y = 0; y < 50; y++)
-                {
-                    var distance = SampleAtPosition(x, y, sdfShapes);
-
-                    Gizmos.DrawCube(new Vector3(x, distance-5, y), new Vector3(1, 10f ,1));
-                }
-            }
-        }
-
         private float SampleAtPosition(int x, int y, SDFShape[] sdfShapes)
         {
             var position = new float3(x, 0, y);
