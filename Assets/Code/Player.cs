@@ -8,13 +8,19 @@ namespace IslandGame
     {
         [SerializeField]
         private float forwardSpeed = 0.1f;
-        private Rigidbody Rig;        
+        private Rigidbody Rig;
+
+        [SerializeField]
+        private float ForcePositionOffset = 0.2f;
 
         [SerializeField]
         private GameObject playerCube;
         [SerializeField]
         private GameObject camera;
         private Vector3 cameraStartLocalPosition;
+        private Vector3 CameraTargetPosition;
+        [SerializeField]
+        private float cameraMovmentSpeed;
         [SerializeField]
         private float cameraPullBackMultiplier = 0.05f;
 
@@ -41,16 +47,32 @@ namespace IslandGame
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + (playerCube.transform.right * 0.5f));
+                Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + (playerCube.transform.right * ForcePositionOffset));
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + (playerCube.transform.right * -0.5f));
+                Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + (playerCube.transform.right * -ForcePositionOffset));
             }
 
-            camera.transform.localPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, cameraStartLocalPosition.z - (Vector3.Magnitude(Rig.velocity) * cameraPullBackMultiplier));
-     
+
+            updateCameraPosition();
+        
+        }
+
+        private void updateCameraPosition()
+        {
+            CameraTargetPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, cameraStartLocalPosition.z - (Vector3.Magnitude(Rig.velocity) * cameraPullBackMultiplier));
+
+            if (CameraTargetPosition.z < camera.transform.localPosition.z)
+            {
+                camera.transform.localPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, camera.transform.localPosition.z - (cameraMovmentSpeed * Time.deltaTime));
+            } else if (camera.transform.localPosition.z <= cameraStartLocalPosition.z)
+            {
+                camera.transform.localPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, camera.transform.localPosition.z + (cameraMovmentSpeed * Time.deltaTime));
+            } else
+            {
+            }
         }
 
 
@@ -72,18 +94,18 @@ namespace IslandGame
                 Debug.Log("Connection attempt failed or disconnection detected");
             else
             {
-                int Newforce = int.Parse(message.Split(';')[1]);
+                if (message.Length == 0)
+                    return;
 
+                int Newforce = int.Parse(message.Split(';')[1]);
                 
                 if(int.Parse(message.Split(';')[0]) == 1)
                 {
-                    print("right");
                     updateRightPaddle(int.Parse(message.Split(';')[1]));
                 }
                     
                 if(int.Parse(message.Split(';')[0]) == 2)
                 {
-                    print("Left");
                     updateLeftPaddle(int.Parse(message.Split(';')[1]));
                 }
             }

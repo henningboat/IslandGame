@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 8293149811009456272}
   - component: {fileID: 2501711434830807321}
   - component: {fileID: 5889674862725419834}
-  - component: {fileID: 3389536638735144492}
+  - component: {fileID: 1934478525296403372}
   m_Layer: 0
   m_Name: BoatMesh
   m_TagString: Untagged
@@ -198,8 +198,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3389536638735144492
-BoxCollider:
+--- !u!135 &1934478525296403372
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -209,8 +209,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.5464143
+  m_Center: {x: 0, y: -0.00000008940697, z: -0.0000008940697}
 --- !u!1 &4134987694901344799
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,10 +260,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2df9ee07def774f91656d27afffd1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 10
+  forwardSpeed: 100
   playerCube: {fileID: 2764592691887714653}
   camera: {fileID: 1694808652600083386}
-  cameraPullBackMultiplier: 0.05
+  cameraMovmentSpeed: 0.2
+  cameraPullBackMultiplier: 0.15
+  serialController: {fileID: 0}
 --- !u!54 &4347683009646002699
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -273,7 +275,7 @@ Rigidbody:
   m_GameObject: {fileID: 4134987694901344799}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 10
+  m_Drag: 1
   m_AngularDrag: 8
   m_UseGravity: 1
   m_IsKinematic: 0
