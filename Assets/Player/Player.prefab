@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 3411069256836139220}
   - component: {fileID: 8511237102460839148}
   - component: {fileID: 4347683009646002699}
+  - component: {fileID: 6712059231783428061}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -261,6 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: 100
+  ForcePositionOffset: 0.2
   playerCube: {fileID: 2764592691887714653}
   camera: {fileID: 1694808652600083386}
   cameraMovmentSpeed: 0.2
@@ -282,6 +284,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &6712059231783428061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4134987694901344799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd9143365f64e55a91aa29752f4c941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LogCount: 0
 --- !u!1 &4356466795096010489
 GameObject:
   m_ObjectHideFlags: 0
