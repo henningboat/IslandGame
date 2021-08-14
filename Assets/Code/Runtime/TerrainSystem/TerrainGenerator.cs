@@ -17,15 +17,11 @@ namespace IslandGame.TerrainSystem
         private Mesh _mesh;
         private float _samplePosition;
 
-        protected override void Awake()
-        {
-            base.Awake();
-        }
-
         struct VertexData
         {
             public float3 position;
             public float3 normal;
+            public float vertexColor;
         }
 
         private void Update()
@@ -58,7 +54,13 @@ namespace IslandGame.TerrainSystem
             int quadCount = TerrainSize.x * TerrainSize.y;
             int vertexCount = quadCount * 4;
             int indexCount = quadCount * 6;
-            data.SetVertexBufferParams(vertexCount, new[] {new VertexAttributeDescriptor(VertexAttribute.Position), new VertexAttributeDescriptor(VertexAttribute.Normal)});
+            data.SetVertexBufferParams(vertexCount,
+                new[]
+                {
+                    new VertexAttributeDescriptor(VertexAttribute.Position), 
+                    new VertexAttributeDescriptor(VertexAttribute.Normal),
+                    new VertexAttributeDescriptor(VertexAttribute.Color, VertexAttributeFormat.Float32, 1)
+                });
             data.SetIndexBufferParams(indexCount, IndexFormat.UInt32);
 
             var vertexData = data.GetVertexData<VertexData>();
@@ -71,11 +73,11 @@ namespace IslandGame.TerrainSystem
                 {
                     int vertexIndex = (x * TerrainSize.x + z) * 4;
 
-                    vertexData[vertexIndex + 0] = new VertexData() {position = new float3(x,SampleHeightmap(heightmap, x + 0, z + 0),z)};
-                    vertexData[vertexIndex + 1] = new VertexData() {position = new float3(x+1,SampleHeightmap(heightmap, x + 1, z + 0),z)};
-                    vertexData[vertexIndex + 2] = new VertexData() {position = new float3(x,SampleHeightmap(heightmap, x + 0, z + 1),z+1)};
-                    vertexData[vertexIndex + 3] = new VertexData() {position = new float3(x+1,SampleHeightmap(heightmap, x + 1, z + 1),z+1)};
-
+                    vertexData[vertexIndex + 0] = SampleHeightmapToVertexData(heightmap,x,z);
+                    vertexData[vertexIndex + 1] = SampleHeightmapToVertexData(heightmap,x+1,z);
+                    vertexData[vertexIndex + 2] = SampleHeightmapToVertexData(heightmap,x,z+1);
+                    vertexData[vertexIndex + 3] = SampleHeightmapToVertexData(heightmap,x+1,z+1);
+                    
                     int indexIndex = (x * TerrainSize.x + z) * 6;
 
                     indexData[indexIndex + 0] =(uint) vertexIndex + 2;
@@ -100,6 +102,18 @@ namespace IslandGame.TerrainSystem
             GetComponent<MeshCollider>().sharedMesh = _mesh;
         }
 
+        private VertexData SampleHeightmapToVertexData(NativeArray<float> heightmap, int x, int z)
+        {
+            VertexData vertexData = default;
+            float distance = SampleHeightmap(heightmap, x, z);
+            vertexData.vertexColor = distance;
+
+            float height = _distanceMapping.Evaluate(-distance);
+
+            vertexData.position = new float3(x, height, z);
+            return vertexData;
+        }
+
         private float SampleHeightmap(NativeArray<float> heightmap, int x, int z)
         {
             x = math.clamp(x,0, TerrainSize.x - 1);
@@ -118,14 +132,6 @@ namespace IslandGame.TerrainSystem
             float distance = sdfShapes.Select(shape => { return shape.Sample(position); }).Min();
 
             distance += noise.snoise(position * 0.2f) * 4;
-
-            distance = _distanceMapping.Evaluate(-distance);
-            Gizmos.color = distance < 0 ? Color.blue : Color.green;
-
-            if (distance > 4)
-            {
-                Gizmos.color = Color.grey;
-            }
 
             return distance;
         }
