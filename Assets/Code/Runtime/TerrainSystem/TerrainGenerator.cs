@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using IslandGame.Utils;
 using Unity.Collections;
@@ -16,6 +18,9 @@ namespace IslandGame.TerrainSystem
         private static readonly int2 TerrainSize = new int2(50, 50);
         private Mesh _mesh;
         private float _samplePosition;
+
+       [SerializeField] private List<MeshFilter> _terrainMeshes;
+
 
         struct VertexData
         {
@@ -98,8 +103,12 @@ namespace IslandGame.TerrainSystem
             
             heightmap.Dispose();
 
-            GetComponent<MeshFilter>().sharedMesh = _mesh;
             GetComponent<MeshCollider>().sharedMesh = _mesh;
+
+            foreach (var terrainMeshes in _terrainMeshes)
+            {
+                terrainMeshes.sharedMesh = _mesh;
+            }
         }
 
         private VertexData SampleHeightmapToVertexData(NativeArray<float> heightmap, int x, int z)
@@ -131,7 +140,7 @@ namespace IslandGame.TerrainSystem
             var position = new float3(x, 0, y);
             float distance = sdfShapes.Select(shape => { return shape.Sample(position); }).Min();
 
-            distance += noise.snoise(position * 0.2f) * 4;
+            distance += noise.snoise(position * 0.2f);
 
             return distance;
         }
