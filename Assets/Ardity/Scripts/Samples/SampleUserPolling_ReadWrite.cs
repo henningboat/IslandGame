@@ -61,6 +61,8 @@ public class SampleUserPolling_ReadWrite : MonoBehaviour
         else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
             Debug.Log("Connection attempt failed or disconnection detected");
         else
+        {
             Debug.Log("Message arrived: " + message);
+        }
     }
 }
