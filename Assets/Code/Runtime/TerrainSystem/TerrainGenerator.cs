@@ -138,7 +138,7 @@ namespace IslandGame.TerrainSystem
         private float SampleAtPosition(int x, int y, SDFShape[] sdfShapes)
         {
             var position = new float3(x, 0, y);
-            float distance = sdfShapes.Select(shape => { return shape.Sample(position); }).Min();
+            float distance = -sdfShapes.Select(shape => { return shape.Sample(position); }).Min();
 
             distance += noise.snoise(position * 0.2f);
 
