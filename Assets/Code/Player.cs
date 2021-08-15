@@ -29,6 +29,9 @@ namespace IslandGame
 
         private float oldRightForce = 0.0f;
         private float oldLeftForce = 0.0f;
+        [SerializeField] private float _paddleRotationRange = 1;
+        [SerializeField] private Transform _rightPaddle;
+        [SerializeField] private Transform _leftPaddle;
 
 
         void Start()
@@ -118,6 +121,7 @@ namespace IslandGame
 
         private void updateRightPaddle(int NewForce)
         {
+            UpdatePaddleGraphics(_rightPaddle,NewForce);
             if ((NewForce - oldRightForce) > 0)
             {
                 float force = (NewForce - oldRightForce) * 0.01f;
@@ -127,8 +131,14 @@ namespace IslandGame
             oldRightForce = NewForce;
         }
 
+        private void UpdatePaddleGraphics(Transform rightPaddle, int newForce)
+        {
+            rightPaddle.localEulerAngles = Vector3.up * (newForce - 50) * _paddleRotationRange;
+        }
+
         private void updateLeftPaddle(int NewForce)
         {
+            UpdatePaddleGraphics(_leftPaddle,NewForce);
             if ((NewForce - oldLeftForce) > 0)
             {
                 float force = (NewForce - oldLeftForce) * 0.01f;
