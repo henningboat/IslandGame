@@ -107,12 +107,12 @@ namespace IslandGame
 
                 int Newforce = int.Parse(message.Split(';')[1]);
                 
-                if(int.Parse(message.Split(';')[0]) == 1)
+                if(int.Parse(message.Split(';')[0]) == 2)
                 {
                     updateRightPaddle(int.Parse(message.Split(';')[1]));
                 }
                     
-                if(int.Parse(message.Split(';')[0]) == 2)
+                if(int.Parse(message.Split(';')[0]) == 1)
                 {
                     updateLeftPaddle(int.Parse(message.Split(';')[1]));
                 }
@@ -121,7 +121,7 @@ namespace IslandGame
 
         private void updateRightPaddle(int NewForce)
         {
-            UpdatePaddleGraphics(_rightPaddle,NewForce);
+            UpdatePaddleGraphics(_leftPaddle,NewForce);
             if ((NewForce - oldRightForce) > 0)
             {
                 float force = (NewForce - oldRightForce) * 0.01f;
@@ -138,7 +138,7 @@ namespace IslandGame
 
         private void updateLeftPaddle(int NewForce)
         {
-            UpdatePaddleGraphics(_leftPaddle,NewForce);
+            UpdatePaddleGraphics(_rightPaddle,NewForce);
             if ((NewForce - oldLeftForce) > 0)
             {
                 float force = (NewForce - oldLeftForce) * 0.01f;
