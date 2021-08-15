@@ -6,24 +6,18 @@ namespace IslandGame
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField]
-        private float forwardSpeed = 0.1f;
+        [SerializeField] private float forwardSpeed = 0.1f;
         private float startForwardSpeed;
         private Rigidbody Rig;
 
-        [SerializeField]
-        private float ForcePositionOffset = 0.2f;
+        [SerializeField] private float ForcePositionOffset = 0.2f;
 
-        [SerializeField]
-        private GameObject playerCube;
-        [SerializeField]
-        private GameObject camera;
+        [SerializeField] private GameObject playerCube;
+        [SerializeField] private GameObject camera;
         private Vector3 cameraStartLocalPosition;
         private Vector3 CameraTargetPosition;
-        [SerializeField]
-        private float cameraMovmentSpeed;
-        [SerializeField]
-        private float cameraPullBackMultiplier = 0.05f;
+        [SerializeField] private float cameraMovmentSpeed;
+        [SerializeField] private float cameraPullBackMultiplier = 0.05f;
 
         public SerialController serialController;
 
@@ -34,7 +28,7 @@ namespace IslandGame
         [SerializeField] private Transform _leftPaddle;
 
 
-        void Start()
+        private void Start()
         {
             cameraStartLocalPosition = camera.transform.localPosition;
 
@@ -45,18 +39,18 @@ namespace IslandGame
             Rig = GetComponent<Rigidbody>();
         }
 
-        void Update()
+        private void Update()
         {
             UpdatePaddles();
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + (playerCube.transform.right * ForcePositionOffset));
+                Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + playerCube.transform.right * ForcePositionOffset);
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + (playerCube.transform.right * -ForcePositionOffset));
+                Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + playerCube.transform.right * -ForcePositionOffset);
             }
 
             updateCameraPosition();
@@ -64,15 +58,17 @@ namespace IslandGame
 
         private void updateCameraPosition()
         {
-            CameraTargetPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, cameraStartLocalPosition.z - (Vector3.Magnitude(Rig.velocity) * cameraPullBackMultiplier));
+            CameraTargetPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, cameraStartLocalPosition.z - Vector3.Magnitude(Rig.velocity) * cameraPullBackMultiplier);
 
             if (CameraTargetPosition.z < camera.transform.localPosition.z)
             {
-                camera.transform.localPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, camera.transform.localPosition.z - (cameraMovmentSpeed * Time.deltaTime));
-            } else if (camera.transform.localPosition.z <= cameraStartLocalPosition.z)
+                camera.transform.localPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, camera.transform.localPosition.z - cameraMovmentSpeed * Time.deltaTime);
+            }
+            else if (camera.transform.localPosition.z <= cameraStartLocalPosition.z)
             {
-                camera.transform.localPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, camera.transform.localPosition.z + (cameraMovmentSpeed * Time.deltaTime));
-            } else
+                camera.transform.localPosition = new Vector3(cameraStartLocalPosition.x, cameraStartLocalPosition.y, camera.transform.localPosition.z + cameraMovmentSpeed * Time.deltaTime);
+            }
+            else
             {
             }
         }
@@ -90,29 +86,37 @@ namespace IslandGame
             }
 
 
-            string message = serialController.ReadSerialMessage();
+            var message = serialController.ReadSerialMessage();
 
             if (message == null)
+            {
                 return;
+            }
 
             // Check if the message is plain data or a connect/disconnect event.
             if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
+            {
                 Debug.Log("Connection established");
+            }
             else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
+            {
                 Debug.Log("Connection attempt failed or disconnection detected");
+            }
             else
             {
                 if (message.Length == 0)
+                {
                     return;
+                }
 
-                int Newforce = int.Parse(message.Split(';')[1]);
-                
-                if(int.Parse(message.Split(';')[0]) == 2)
+                var Newforce = int.Parse(message.Split(';')[1]);
+
+                if (int.Parse(message.Split(';')[0]) == 2)
                 {
                     updateRightPaddle(int.Parse(message.Split(';')[1]));
                 }
-                    
-                if(int.Parse(message.Split(';')[0]) == 1)
+
+                if (int.Parse(message.Split(';')[0]) == 1)
                 {
                     updateLeftPaddle(int.Parse(message.Split(';')[1]));
                 }
@@ -121,11 +125,11 @@ namespace IslandGame
 
         private void updateRightPaddle(int NewForce)
         {
-            UpdatePaddleGraphics(_leftPaddle,NewForce);
-            if ((NewForce - oldRightForce) > 0)
+            UpdatePaddleGraphics(_leftPaddle, NewForce);
+            if (NewForce - oldRightForce > 0)
             {
-                float force = (NewForce - oldRightForce) * 0.01f;
-                Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + (playerCube.transform.right * ForcePositionOffset));
+                var force = (NewForce - oldRightForce) * 0.01f;
+                Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + playerCube.transform.right * ForcePositionOffset);
             }
 
             oldRightForce = NewForce;
@@ -138,11 +142,11 @@ namespace IslandGame
 
         private void updateLeftPaddle(int NewForce)
         {
-            UpdatePaddleGraphics(_rightPaddle,NewForce);
-            if ((NewForce - oldLeftForce) > 0)
+            UpdatePaddleGraphics(_rightPaddle, NewForce);
+            if (NewForce - oldLeftForce > 0)
             {
-                float force = (NewForce - oldLeftForce) * 0.01f;
-                Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + (playerCube.transform.right * -ForcePositionOffset));
+                var force = (NewForce - oldLeftForce) * 0.01f;
+                Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + playerCube.transform.right * -ForcePositionOffset);
             }
 
 
