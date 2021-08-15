@@ -469,13 +469,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: 100
-  ForcePositionOffset: 0.5
+  ForcePositionOffset: 0.8
   playerCube: {fileID: 2764592691887714653}
   camera: {fileID: 1694808652600083386}
   cameraMovmentSpeed: 0.2
   cameraPullBackMultiplier: 0.15
   serialController: {fileID: 4769535635460026873}
-  _paddleRotationRange: 1
+  _paddleRotationRange: -1
   _rightPaddle: {fileID: 463182445230034405}
   _leftPaddle: {fileID: 2277745032652392562}
 --- !u!54 &4347683009646002699
@@ -671,7 +671,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 87.55
+  m_fontSize: 117.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -742,7 +742,7 @@ Transform:
   m_Children:
   - {fileID: 2277745032652392562}
   m_Father: {fileID: 3411069256836139220}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &8963221725856015057
 GameObject:
@@ -768,12 +768,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8963221725856015057}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.212, y: 0, z: -0.024}
+  m_LocalPosition: {x: -0.212, y: 0.079, z: -0.024}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 463182445230034405}
   m_Father: {fileID: 3411069256836139220}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1001 &137136070845229582
 PrefabInstance:
@@ -838,6 +838,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 47
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e0ac2eb9e2b811d4eb7b62f2669342dc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -2298116268990182121, guid: 8b16dc2c50fbde14598875cf9b4e01b7, type: 3}
     - target: {fileID: 919132149155446097, guid: e0ac2eb9e2b811d4eb7b62f2669342dc, type: 3}
       propertyPath: m_Name
       value: Oar
@@ -912,6 +916,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 47.585
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e0ac2eb9e2b811d4eb7b62f2669342dc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -2298116268990182121, guid: 8b16dc2c50fbde14598875cf9b4e01b7, type: 3}
     - target: {fileID: 919132149155446097, guid: e0ac2eb9e2b811d4eb7b62f2669342dc, type: 3}
       propertyPath: m_Name
       value: Oar
