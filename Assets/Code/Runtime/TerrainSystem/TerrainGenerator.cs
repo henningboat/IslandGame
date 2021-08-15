@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using IslandGame.Utils;
@@ -21,15 +22,27 @@ namespace IslandGame.TerrainSystem
         private Mesh _mesh;
         private float _samplePosition;
 
+        private void Start()
+        {
+            BuildIsland();
+        }
 
         private void Update()
         {
-            if (Application.isPlaying && Time.frameCount > 2)
+            if (Application.isEditor)
             {
-                return;
+                if (Application.isPlaying && Time.frameCount > 2)
+                {
+                    return;
+                }
+
+
+                BuildIsland();
             }
+        }
 
-
+        private void BuildIsland()
+        {
             var sdfShapes = FindObjectsOfType<SDFShape>();
 
             //get heightmap
