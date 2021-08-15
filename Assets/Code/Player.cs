@@ -133,8 +133,6 @@ namespace IslandGame
             {
                 float force = (NewForce - oldLeftForce) * 0.01f;
                 Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + (playerCube.transform.right * -ForcePositionOffset));
-                print(force);
-
             }
 
 
