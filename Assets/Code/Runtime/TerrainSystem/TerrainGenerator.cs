@@ -16,8 +16,11 @@ namespace IslandGame.TerrainSystem
         [SerializeField] private int2 TerrainSize = new int2(50, 50);
 
         [SerializeField] private List<MeshFilter> _terrainMeshes;
+
+        [SerializeField] private GameObject _fillObjectRoot;
         private Mesh _mesh;
         private float _samplePosition;
+
 
         private void Update()
         {
@@ -26,7 +29,7 @@ namespace IslandGame.TerrainSystem
                 return;
             }
 
-           
+
             var sdfShapes = FindObjectsOfType<SDFShape>();
 
             //get heightmap
@@ -43,13 +46,13 @@ namespace IslandGame.TerrainSystem
             var quadCount = TerrainSize.x * TerrainSize.y;
             var vertexCount = quadCount * 4;
             var indexCount = quadCount * 6;
-            
+
             if (_mesh == null)
             {
                 _mesh = new Mesh {name = "ProceduralTerrain"};
                 _mesh.hideFlags = HideFlags.DontSave;
             }
-            else if (_mesh.GetIndexCount(0)!=indexCount)
+            else if (_mesh.GetIndexCount(0) != indexCount)
             {
                 if (Application.isPlaying)
                 {
@@ -66,7 +69,7 @@ namespace IslandGame.TerrainSystem
 
             var meshWriter = Mesh.AllocateWritableMeshData(1);
             var data = meshWriter[0];
-            
+
             data.SetVertexBufferParams(vertexCount, new VertexAttributeDescriptor(VertexAttribute.Position), new VertexAttributeDescriptor(VertexAttribute.Normal),
                 new VertexAttributeDescriptor(VertexAttribute.Color, VertexAttributeFormat.Float32, 1));
             data.SetIndexBufferParams(indexCount, IndexFormat.UInt32);
@@ -110,7 +113,7 @@ namespace IslandGame.TerrainSystem
 
             foreach (var terrainMeshes in _terrainMeshes)
             {
-                if (terrainMeshes is { })
+                if (terrainMeshes != null)
                 {
                     terrainMeshes.sharedMesh = _mesh;
                 }
