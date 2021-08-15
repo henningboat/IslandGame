@@ -840,6 +840,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3789027128416781808, guid: 1ba16e7500d754944b9bc8524750557a, type: 3}
+      propertyPath: m_Size.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789027128416781808, guid: 1ba16e7500d754944b9bc8524750557a, type: 3}
+      propertyPath: m_Size.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789027128416781808, guid: 1ba16e7500d754944b9bc8524750557a, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
