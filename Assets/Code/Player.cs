@@ -8,6 +8,7 @@ namespace IslandGame
     {
         [SerializeField]
         private float forwardSpeed = 0.1f;
+        private float startForwardSpeed;
         private Rigidbody Rig;
 
         [SerializeField]
@@ -36,7 +37,7 @@ namespace IslandGame
 
             serialController = GetComponentInChildren<SerialController>();
 
-            print(serialController);
+            startForwardSpeed = forwardSpeed;
 
             Rig = GetComponent<Rigidbody>();
         }
@@ -55,9 +56,7 @@ namespace IslandGame
                 Rig.AddForceAtPosition(playerCube.transform.forward * forwardSpeed, playerCube.transform.position + (playerCube.transform.right * -ForcePositionOffset));
             }
 
-
             updateCameraPosition();
-        
         }
 
         private void updateCameraPosition()
@@ -78,9 +77,15 @@ namespace IslandGame
 
         private void UpdatePaddles()
         {
-            //---------------------------------------------------------------------
-            // Receive data
-            //---------------------------------------------------------------------
+            if (Vector3.Magnitude(Rig.velocity) > 2.75f)
+            {
+                forwardSpeed = startForwardSpeed * ((Vector3.Magnitude(Rig.velocity) - 2.75f) / 7.25f);
+            }
+            else
+            {
+                forwardSpeed = startForwardSpeed;
+            }
+
 
             string message = serialController.ReadSerialMessage();
 
@@ -116,8 +121,7 @@ namespace IslandGame
             if ((NewForce - oldRightForce) > 0)
             {
                 float force = (NewForce - oldRightForce) * 0.01f;
-                print("Force on Left: " + force);
-                Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + (playerCube.transform.right * 0.5f));
+                Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + (playerCube.transform.right * ForcePositionOffset));
             }
 
             oldRightForce = NewForce;
@@ -128,22 +132,13 @@ namespace IslandGame
             if ((NewForce - oldLeftForce) > 0)
             {
                 float force = (NewForce - oldLeftForce) * 0.01f;
-                print("Force on Left: " + force);
-                Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + (playerCube.transform.right * -0.5f));
+                Rig.AddForceAtPosition(playerCube.transform.forward * (forwardSpeed * force), playerCube.transform.position + (playerCube.transform.right * -ForcePositionOffset));
+                print(force);
+
             }
 
+
             oldLeftForce = NewForce;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawRay(playerCube.transform.position + (playerCube.transform.right * 0.5f), playerCube.transform.forward * forwardSpeed);
-            Gizmos.DrawRay(playerCube.transform.position + (playerCube.transform.right * -0.5f), playerCube.transform.forward * forwardSpeed);
-
-            /*
-            Gizmos.DrawRay(new Vector3(playerCube.transform.position.x - 0.5f, playerCube.transform.position.y, playerCube.transform.position.z), playerCube.transform.forward * forwardSpeed);
-            Gizmos.DrawRay(new Vector3(playerCube.transform.position.x + 0.5f, playerCube.transform.position.y, playerCube.transform.position.z), playerCube.transform.forward * forwardSpeed);
-            */
         }
     }
 }

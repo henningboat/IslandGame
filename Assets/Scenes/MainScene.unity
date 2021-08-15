@@ -910,7 +910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 55.87847
+      value: 56.114674
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -918,11 +918,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.148153
+      value: 14.580744
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8372013
+      value: 0.88121146
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -930,7 +930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5468949
+      value: -0.47272223
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalRotation.z
@@ -942,7 +942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -66.309
+      value: -56.422
       objectReference: {fileID: 0}
     - target: {fileID: 3411069256836139220, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -958,7 +958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347683009646002699, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: m_AngularDrag
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4769535635460026873, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: maxUnreadMessages
@@ -977,24 +977,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8511237102460839148, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
-      propertyPath: forwardSpeed
-      value: 65
-      objectReference: {fileID: 0}
-    - target: {fileID: 8511237102460839148, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: serialController
       value: 
       objectReference: {fileID: 505714418}
     - target: {fileID: 8511237102460839148, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
-      propertyPath: cameraMovmentSpeed
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 8511237102460839148, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
       propertyPath: ForcePositionOffset
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 8511237102460839148, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
-      propertyPath: cameraPullBackMultiplier
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6da5cca9b53c5d344bdb2ed8982aecf6, type: 3}
