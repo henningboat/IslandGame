@@ -260,11 +260,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2df9ee07def774f91656d27afffd1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 100
+  forwardSpeed: 65
+  ForcePositionOffset: 0.05
   playerCube: {fileID: 2764592691887714653}
   camera: {fileID: 1694808652600083386}
-  cameraMovmentSpeed: 0.2
-  cameraPullBackMultiplier: 0.15
+  cameraMovmentSpeed: 0.75
+  cameraPullBackMultiplier: 0.25
   serialController: {fileID: 0}
 --- !u!54 &4347683009646002699
 Rigidbody:
